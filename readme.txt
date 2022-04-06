@@ -108,6 +108,7 @@ Files :
     End MEMBER_LIFECYCLE_STATUS,
      abs(round(Months_between(a.current_month , a.prior_month)))  Lapsed_months,
      current_month, prior_month,next_month
+     from analysis a
     ---
     Also created a view for rest API
  create or replace view revenue_analysis_v
