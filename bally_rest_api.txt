@@ -1,0 +1,67 @@
+Model : 
+
+class TestAnalysis(models.Model):
+    """
+    ID                           NUMBER
+    MEMBER_ID           NOT NULL NUMBER(38)
+    GAME_ID             NOT NULL NUMBER(38)
+    ACTIVITY_YEAR_MONTH NOT NULL NUMBER(38)
+    WAGER_AMOUNT                 NUMBER
+    NUMBER_OF_WAGERS             NUMBER
+    WIN_AMOUNT                   NUMBER
+    """
+    member_id = models.BigIntegerField(blank=True, null=True, editable=True, verbose_name=VN_C('memberid'))
+    game_id = models.BigIntegerField(blank=True, null=True, editable=True, verbose_name=VN_C('gameid'))
+    activity_year_month = models.IntegerField(blank=True, null=True, editable=True, verbose_name=VN_C('activity_year_month'))
+    wager_amount = models.DecimalField(max_digits=20, decimal_places=3,blank=True, null=True, verbose_name=VN_C('wager_amount'))
+    number_of_wagers = models.DecimalField(max_digits=20, decimal_places=3,blank=True, null=True, verbose_name=VN_C('number_of_wagers'))
+    win_amount = models.DecimalField(max_digits=20, decimal_places=3,blank=True, null=True, verbose_name=VN_C('win_amount'))
+    id = models.BigIntegerField(blank=False, null=False, editable=False, verbose_name=VN_C('id'), primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'revenue_analysis_v'
+        verbose_name=VN_T('revene_analysis')
+
+    def __str__(self):
+        return str(self.id)
+
+---------------------------
+Serializer :
+
+class TestAnalysisSerialized(serializers.ModelSerializer):
+    class Meta:
+        model = ecomm_models.TestAnalysis
+        fields = '__all__'
+
+    def create(self, validated_data):
+        data = validated_data
+        return {}
+        return CmnTaxCodes.objects.create(**data)
+
+    def update(self, instance, validated_data):
+       return instance
+-----------------
+View 
+------------------------
+
+class RESTMembersSummary(generics.ListCreateAPIView):
+    lookup_field = 'id'
+    model = ecomm_models.TestAnalysis
+    queryset = model.objects.all()
+    serializer_class = TestAnalysisSerialized
+    pagination_class = StandardResultsSetPagination
+    inputparams = {}
+    queryparams = {}
+
+    def get(self, request, *args, **kwargs):
+        self.inputparams = {}
+        for key,value in self.request.GET.items():
+            if 'format' not in key and 'page' not in key:
+                self.inputparams[key] = value
+        self.queryset = self.model.objects.filter(**self.inputparams)
+        print(self.queryset.query)
+        return self.list(request, *args, **kwargs)
+------------------------------------------------
+url(r"^membersummary/$",RESTMembersSummary.as_view(),name="members_summary"),
+-----------------------------------
