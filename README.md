@@ -52,7 +52,7 @@ Files :
                                p_winamount=20)
   
 
- Note : Not sure I know this can be improved in many areas 
+ Not sure I know this can be improved in many areas 
   like : 
    Creating tables with more indexes , partitions 
    Load Utilities can be tuned : I have done few like Bulk / Batch  Loading
