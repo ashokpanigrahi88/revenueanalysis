@@ -121,6 +121,21 @@ Files :
         Group by member_id,game_id,activity_year_month) a 
  ----------------------
  Q1 : Sample Output 
+MEMBER_ID	CALENDAR_YEAR_MONTH	IS_ACTIVE	PRIOR_MONTH_IS_ACTIVE	MEMBER_LIFECYCLE_STATUS	LAPSED_MONTHS	CURRENT_MONTH	PRIOR_MONTH	NEXT_MONTH
+1001	201701	Active		New		01-Jan-17		01-May-17
+1001	201705	Active	Active	Reactivated	4	01-May-17	01-Jan-17	01-Jun-17
+1001	201706	Active	Active	Retained	1	01-Jun-17	01-May-17	01-Sep-17
+1001	201709	Active	Active	Reactivated	3	01-Sep-17	01-Jun-17	01-Dec-17
+1001	201712	Active	Active	Reactivated	3	01-Dec-17	01-Sep-17	01-Mar-18
+1001	201903	Non-Active	Active	Lapsed	3	01-Mar-18	01-Dec-17	
+1002	201703	Active		New		01-Mar-17		01-Apr-17
+1002	201704	Active	Active	Retained	1	01-Apr-17	01-Mar-17	01-Aug-17
+1002	201708	Active	Active	Reactivated	4	01-Aug-17	01-Apr-17	01-Sep-17
+1002	201709	Active	Active	Retained	1	01-Sep-17	01-Aug-17	
+1003	201706	Active		New		01-Jun-17		01-Jul-17
+1003	201707	Active	Active	Retained	1	01-Jul-17	01-Jun-17	
+1004	201902	Active		New		01-Feb-19		
+
     MEMBER_ID  CALENDAR_YEAR_MONTH   IS_ACTIVE PRIOR_MONTH_IS_ACTIVE  ... LAPSED_MONTHS  CURRENT_MONTH PRIOR_MONTH NEXT_MONTH
 0       1001               201701      Active                  None  ...           NaN     2017-01-01         NaT 2017-05-01
 1       1001               201705      Active                Active  ...           4.0     2017-05-01  2017-01-01 2017-06-01
